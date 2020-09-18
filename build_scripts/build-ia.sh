@@ -209,3 +209,4 @@ make package-$ADDON_ID
 
 ### COPY ZIP ###
 mv $KODI_GIT/cmake/addons/$ADDON_ID/$ADDON_ID-prefix/src/$ADDON_ID-build/addon-$ADDON_ID*.zip $HOME/$ZIP_NAME && cd $HOME && ls $ZIP_NAME
+echo "${ZIP_NAME}" > $HOME/zip_name.txt
