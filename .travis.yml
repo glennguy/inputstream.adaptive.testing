@@ -43,7 +43,7 @@ script:
     --kodiversion leia
     --no-apt-install
 
-after_script:
+after_success:
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis CI"
   - cd $HOME/.deploy
