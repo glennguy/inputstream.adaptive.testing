@@ -26,6 +26,9 @@ jobs:
       compiler: gcc
       env:
         - ANDROID="" ARCH="aarch64"
+      workspaces:
+        create:
+          name: linux-binaries
     - os: linux
       dist: xenial
       language: cpp
@@ -33,6 +36,8 @@ jobs:
       compiler: gcc
       env:
         - ANDROID="" ARCH="armv7"
+      workspaces:
+        use: linux-binaries
     - os: linux
       dist: xenial
       language: cpp
@@ -40,6 +45,8 @@ jobs:
       compiler: gcc
       env:
         - ANDROID="" ARCH="x86_64"
+      workspaces:
+        use: linux-binaries
     - os: linux
       dist: xenial
       language: cpp
@@ -47,6 +54,8 @@ jobs:
       compiler: gcc
       env:
         - ANDROID=" --android" ARCH="aarch64"
+      workspaces:
+        use: linux-binaries
     - os: linux
       dist: xenial
       language: cpp
@@ -54,7 +63,11 @@ jobs:
       compiler: gcc
       env:
         - ANDROID=" --android" ARCH="armv7"
+      workspaces:
+        use: linux-binaries
     - stage: deploy
+      workspaces:
+        use: linux-binaries
       script:
         - git config --global user.email "travis@travis-ci.org"
         - git config --global user.name "Travis CI"
@@ -62,8 +75,14 @@ jobs:
         - git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
         - mkdir -p $TRAVIS_BUILD_DIR/.build
         - ls $TRAVIS_BUILD_DIR
-        - unzip $HOME/$(cat $HOME/zip_name.txt) -d  $TRAVIS_BUILD_DIR/.build
-        - python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
+        - > 
+          for f in $HOME/*.zip
+          do
+            unzip f -d $TRAVIS_BUILD_DIR/.build
+            python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
+          done
+        #- unzip $HOME/$(cat $HOME/zip_name.txt) -d  $TRAVIS_BUILD_DIR/.build
+        #- python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
         - git config credential.helper "store --file=.git/credentials"
         - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
         - git add .
