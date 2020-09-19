@@ -89,7 +89,7 @@ jobs:
         - > 
           for f in $TRAVIS_BUILD_DIR/*.zip; do
             unzip $f -d $TRAVIS_BUILD_DIR/.build
-            python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
+            python3 $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
           done
         #- unzip $HOME/$(cat $HOME/zip_name.txt) -d  $TRAVIS_BUILD_DIR/.build
         #- python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
@@ -102,8 +102,6 @@ jobs:
 install:
   - sudo apt-get update && sudo apt-get -y update
   - sudo apt install -y --no-install-recommends build-essential git cmake unzip aria2 default-jdk python3
-  - sudo rm -r /usr/bin/python
-  - sudo ln -s /usr/bin/python3 /usr/bin/python
 
 script:
   - bash -x $TRAVIS_BUILD_DIR/build_scripts/build-ia.sh
