@@ -83,9 +83,9 @@ jobs:
         - git config --global user.email "travis@travis-ci.org"
         - git config --global user.name "Travis CI"
         - cd $HOME/.deploy
-        - git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
+        #- git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
         - mkdir -p $TRAVIS_BUILD_DIR/.build
-        - ls $HOME
+        - ls $TRAVIS_BUILD_DIR
         - > 
           for f in $TRAVIS_BUILD_DIR/*.zip; do
             unzip $f -d $TRAVIS_BUILD_DIR/.build
@@ -97,7 +97,8 @@ jobs:
         - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
         - git add .
         - git commit --allow-empty -m "$TRAVIS_COMMIT_MESSAGE"
-        - git push --set-upstream origin travis-build-$TRAVIS_BUILD_NUMBER
+        - git push
+        #- git push --set-upstream origin travis-build-$TRAVIS_BUILD_NUMBER
 
 install:
   - sudo apt-get update && sudo apt-get -y update
