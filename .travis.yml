@@ -39,7 +39,9 @@ jobs:
       env:
         - ANDROID="" ARCH="armv7"
       workspaces:
-        use: linux-binaries
+        create:
+          name: linux-binaries
+          paths: .
 
     - os: linux
       dist: xenial
@@ -49,7 +51,9 @@ jobs:
       env:
         - ANDROID="" ARCH="x86_64"
       workspaces:
-        use: linux-binaries
+        create:
+          name: linux-binaries
+          paths: .
 
     - os: linux
       dist: xenial
@@ -59,7 +63,9 @@ jobs:
       env:
         - ANDROID=" --android" ARCH="aarch64"
       workspaces:
-        use: linux-binaries
+        create:
+          name: linux-binaries
+          paths: .
 
     - os: linux
       dist: xenial
@@ -69,7 +75,9 @@ jobs:
       env:
         - ANDROID=" --android" ARCH="armv7"
       workspaces:
-        use: linux-binaries
+        create:
+          name: linux-binaries
+          paths: .
 
     - stage: deploy
       workspaces:
