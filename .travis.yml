@@ -123,4 +123,4 @@ script:
     --no-apt-install
     --arch $ARCH 
     $ANDROID
- 
+  - mv $HOME/*.zip $TRAVIS_BUILD_DIR
