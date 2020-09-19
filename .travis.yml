@@ -29,6 +29,7 @@ jobs:
       workspaces:
         create:
           name: linux-binaries
+          paths: .
     - os: linux
       dist: xenial
       language: cpp
@@ -76,8 +77,8 @@ jobs:
         - mkdir -p $TRAVIS_BUILD_DIR/.build
         - ls $HOME
         - > 
-          for f in $HOME/*.zip; do
-            unzip f -d $TRAVIS_BUILD_DIR/.build
+          for f in $TRAVIS_BUILD_DIR/*.zip; do
+            unzip $f -d $TRAVIS_BUILD_DIR/.build
             python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
           done
         #- unzip $HOME/$(cat $HOME/zip_name.txt) -d  $TRAVIS_BUILD_DIR/.build
