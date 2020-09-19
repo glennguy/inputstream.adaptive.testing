@@ -14,13 +14,7 @@ env:
   global:
     - app_id=inputstream.adaptive.testing
     - secure: "cEcDRo+aWtu0+qCS7oE7bZ23OzbFvsdT1I9P/W2i4VBU9FfDVxuXjX8rG3kUrN7xIxJnEWrJRtrhOHOVjzqZ5tnBsbTLS4mbII4HtPpGpOpxOdnDzeyOa93UgAyMD/SWUFzN/vhgn/LtG0oMqZcQDj7L4ccMkjz4h7075iMxQhSo8vmNyDIpjGwFrHFfifXSZoc0oZsszqXauxLFvPsaXpuTeO86iQdrJ4zUJw+OVnASD6UtQm1LcunJ3N8HsgGKzZGOjUZ2ZxhAf/+00pTOozh6nrlguPs2CgJuHC6J579dckT7OjkjTeGFbqH7bEITQpyH35tXffDs6lptpdcpLjp7m8McAG47CCAyYKmyKRMxTB9M5r4b9QwGsSCO9IxEQQHi/c+WR+bUOp/bYaVYygsJTT+1I0a8mrJ+vOrjhfK1O5pNKNv6Vd1WlTdo8pG6EXMw/P/HpNFpVfHPP0zCNbG+lBCogfaIwVkU+xNWCSXPZC0BbG8Jl/14W1M5scB4sFIYGtdsljOyHYbYTARpwnQS/ar+JpbNOUPkk+/NmKA3YOCQoVi69w/FK4SJR+2e0PCUwES86plYFkg5DzqmR4rpSVshe7dpq6Fl163ktQIfJRvQPvqdfRd/yYtJAMAls7Z7X5UfpjSQR97ndvOx2/cwkdxRTW3dKmWO5rQLhu0="
-
-include:
-  - os: linux
-    dist: xenial
-    sudo: required
-    compiler: gcc
-
+    
 #
 # The addon source is automatically checked out in $TRAVIS_BUILD_DIR,
 # we'll put the Kodi source on the same level
@@ -36,24 +30,36 @@ before_install:
   - cd $HOME/.deploy
   - git checkout -b travis
 
+jobs:
+  include:
+    - stage: compile
+    - os: linux
+      dist: xenial
+      sudo: required
+      compiler: gcc
+      env:
+        - ANDROID=" --android"
+        - ARCH="aarch64"
+    - stage: deploy
+      script:
+        - git config --global user.email "travis@travis-ci.org"
+        - git config --global user.name "Travis CI"
+        - cd $HOME/.deploy
+        - git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
+        - mkdir -p $TRAVIS_BUILD_DIR/.build
+        - ls $TRAVIS_BUILD_DIR
+        - unzip $HOME/$(cat $HOME/zip_name.txt) -d  $TRAVIS_BUILD_DIR/.build
+        - python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
+        - git config credential.helper "store --file=.git/credentials"
+        - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+        - git add .
+        - git commit --allow-empty -m "$TRAVIS_COMMIT_MESSAGE"
+        - git push --set-upstream origin travis-build-$TRAVIS_BUILD_NUMBER
+
 script:
   - bash -x $TRAVIS_BUILD_DIR/build_scripts/build-ia.sh
-    --android
-    --arch aarch64
     --kodiversion leia
     --no-apt-install
-
-after_success:
-  - git config --global user.email "travis@travis-ci.org"
-  - git config --global user.name "Travis CI"
-  - cd $HOME/.deploy
-  - git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
-  - mkdir -p $TRAVIS_BUILD_DIR/.build
-  - ls $TRAVIS_BUILD_DIR
-  - unzip $HOME/$(cat $HOME/zip_name.txt) -d  $TRAVIS_BUILD_DIR/.build
-  - python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
-  - git config credential.helper "store --file=.git/credentials"
-  - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - git add .
-  - git commit --allow-empty -m "$TRAVIS_COMMIT_MESSAGE"
-  - git push --set-upstream origin travis-build-$TRAVIS_BUILD_NUMBER
+    --arch $ARCH 
+    $ANDROID
+ 
