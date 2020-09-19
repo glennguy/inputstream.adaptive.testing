@@ -74,10 +74,9 @@ jobs:
         - cd $HOME/.deploy
         - git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
         - mkdir -p $TRAVIS_BUILD_DIR/.build
-        - ls $TRAVIS_BUILD_DIR
+        - ls $HOME
         - > 
-          for f in $HOME/*.zip
-          do
+          for f in $HOME/*.zip; do
             unzip f -d $TRAVIS_BUILD_DIR/.build
             python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
           done
