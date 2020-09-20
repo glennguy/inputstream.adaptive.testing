@@ -28,6 +28,7 @@ jobs:
           name: linux-armv7-leia
           paths: .
     - env: ANDROID="" ARCH="armv7" KODI_VERSION="matrix"
+      dist: bionic
       workspaces:
         create:
           name: linux-armv7-matrix
@@ -39,6 +40,7 @@ jobs:
           name: linux-x86_64-leia
           paths: .
     - env: ANDROID="" ARCH="x86_64" KODI_VERSION="matrix"
+      dist: bionic
       workspaces:
         create:
           name: linux-x86_64-matrix
@@ -50,6 +52,7 @@ jobs:
           name: android-aarch64-leia
           paths: .
     - env: ANDROID=" --android" ARCH="aarch64" KODI_VERSION="matrix"
+      dist: bionic
       workspaces:
         create:
           name: android-aarch64-matrix
@@ -61,6 +64,7 @@ jobs:
           name: android-armv7-leia
           paths: .
     - env: ANDROID=" --android" ARCH="armv7" KODI_VERSION="matrix"
+      dist: bionic
       workspaces:
         create:
           name: android-armv7-matrix
