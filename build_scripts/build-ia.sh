@@ -178,7 +178,6 @@ if [[ $KODI_VERSION == "leia" ]]; then
     fi
 else
     git checkout Matrix
-    cd $KODI_GIT/cmake/addons/$ADDON_ID
     if [[ -f $IA_HOME/patchapplied ]]; then
         git apply -R Leia.patch
         rm $IA_HOME/patchapplied
