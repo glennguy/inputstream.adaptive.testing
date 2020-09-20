@@ -2,9 +2,6 @@ env:
   global:
     - app_id=inputstream.adaptive.testing
     - secure: "cEcDRo+aWtu0+qCS7oE7bZ23OzbFvsdT1I9P/W2i4VBU9FfDVxuXjX8rG3kUrN7xIxJnEWrJRtrhOHOVjzqZ5tnBsbTLS4mbII4HtPpGpOpxOdnDzeyOa93UgAyMD/SWUFzN/vhgn/LtG0oMqZcQDj7L4ccMkjz4h7075iMxQhSo8vmNyDIpjGwFrHFfifXSZoc0oZsszqXauxLFvPsaXpuTeO86iQdrJ4zUJw+OVnASD6UtQm1LcunJ3N8HsgGKzZGOjUZ2ZxhAf/+00pTOozh6nrlguPs2CgJuHC6J579dckT7OjkjTeGFbqH7bEITQpyH35tXffDs6lptpdcpLjp7m8McAG47CCAyYKmyKRMxTB9M5r4b9QwGsSCO9IxEQQHi/c+WR+bUOp/bYaVYygsJTT+1I0a8mrJ+vOrjhfK1O5pNKNv6Vd1WlTdo8pG6EXMw/P/HpNFpVfHPP0zCNbG+lBCogfaIwVkU+xNWCSXPZC0BbG8Jl/14W1M5scB4sFIYGtdsljOyHYbYTARpwnQS/ar+JpbNOUPkk+/NmKA3YOCQoVi69w/FK4SJR+2e0PCUwES86plYFkg5DzqmR4rpSVshe7dpq6Fl163ktQIfJRvQPvqdfRd/yYtJAMAls7Z7X5UfpjSQR97ndvOx2/cwkdxRTW3dKmWO5rQLhu0="
-  jobs:
-    - KODI_VERSION="leia"
-    - KODI_VERSION="matrix"
 
 jobs:
   include:
