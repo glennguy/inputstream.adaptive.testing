@@ -311,7 +311,7 @@ def fetch_addon_from_folder(raw_addon_location, target_folder, build_location):
             build_location, addon_target_folder, addon_metadata)
     
     # set path for addons.xml
-    addons_path = addon_metadata.platform.find('../').SubElement('path')
+    addons_path = addon_metadata.platform.find('..').SubElement('path')
     addons_path.text = os.path.join(
         addon_target_folder_basename, get_archive_basename(addon_metadata))
     return addon_metadata
