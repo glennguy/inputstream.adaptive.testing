@@ -92,7 +92,7 @@ jobs:
       install:
         - sudo apt-get update && sudo apt-get -y update
         - sudo apt install -y --no-install-recommends build-essential git unzip
-        - sudo pip3 install gitpython
+        - sudo pip install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
         - git config --global user.email "travis@travis-ci.org"
