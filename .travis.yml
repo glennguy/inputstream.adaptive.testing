@@ -1,20 +1,10 @@
-#
-# Define the build matrix
-#
-# Travis defaults to building on Ubuntu Precise when building on
-# Linux. We need Trusty in order to get up to date versions of
-# cmake and g++.
-#
-
 env:
   global:
     - app_id=inputstream.adaptive.testing
     - secure: "cEcDRo+aWtu0+qCS7oE7bZ23OzbFvsdT1I9P/W2i4VBU9FfDVxuXjX8rG3kUrN7xIxJnEWrJRtrhOHOVjzqZ5tnBsbTLS4mbII4HtPpGpOpxOdnDzeyOa93UgAyMD/SWUFzN/vhgn/LtG0oMqZcQDj7L4ccMkjz4h7075iMxQhSo8vmNyDIpjGwFrHFfifXSZoc0oZsszqXauxLFvPsaXpuTeO86iQdrJ4zUJw+OVnASD6UtQm1LcunJ3N8HsgGKzZGOjUZ2ZxhAf/+00pTOozh6nrlguPs2CgJuHC6J579dckT7OjkjTeGFbqH7bEITQpyH35tXffDs6lptpdcpLjp7m8McAG47CCAyYKmyKRMxTB9M5r4b9QwGsSCO9IxEQQHi/c+WR+bUOp/bYaVYygsJTT+1I0a8mrJ+vOrjhfK1O5pNKNv6Vd1WlTdo8pG6EXMw/P/HpNFpVfHPP0zCNbG+lBCogfaIwVkU+xNWCSXPZC0BbG8Jl/14W1M5scB4sFIYGtdsljOyHYbYTARpwnQS/ar+JpbNOUPkk+/NmKA3YOCQoVi69w/FK4SJR+2e0PCUwES86plYFkg5DzqmR4rpSVshe7dpq6Fl163ktQIfJRvQPvqdfRd/yYtJAMAls7Z7X5UfpjSQR97ndvOx2/cwkdxRTW3dKmWO5rQLhu0="
-    
-#
-# The addon source is automatically checked out in $TRAVIS_BUILD_DIR,
-# we'll put the Kodi source on the same level
-#
+  jobs:
+    - KODI_VERSION="leia"
+    - KODI_VERSION="matrix"
 
 jobs:
   include:
@@ -22,7 +12,6 @@ jobs:
       os: linux
       dist: xenial
       language: cpp
-      sudo: required
       compiler: gcc
       env:
         - ANDROID="" ARCH="aarch64"
@@ -34,7 +23,6 @@ jobs:
     - os: linux
       dist: xenial
       language: cpp
-      sudo: required
       compiler: gcc
       env:
         - ANDROID="" ARCH="armv7"
@@ -46,7 +34,6 @@ jobs:
     - os: linux
       dist: xenial
       language: cpp
-      sudo: required
       compiler: gcc
       env:
         - ANDROID="" ARCH="x86_64"
@@ -58,7 +45,6 @@ jobs:
     - os: linux
       dist: xenial
       language: cpp
-      sudo: required
       compiler: gcc
       env:
         - ANDROID=" --android" ARCH="aarch64"
@@ -70,7 +56,6 @@ jobs:
     - os: linux
       dist: xenial
       language: cpp
-      sudo: required
       compiler: gcc
       env:
         - ANDROID=" --android" ARCH="armv7"
@@ -80,6 +65,9 @@ jobs:
           paths: .
 
     - stage: deploy
+      os: linux
+      dist: xenial
+      language: python
       workspaces:
         use:
           - linux-aarch64
@@ -95,23 +83,20 @@ jobs:
       script:
         - git config --global user.email "travis@travis-ci.org"
         - git config --global user.name "Travis CI"
-        - cd $HOME/.deploy
-        #- git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
-        - mkdir -p $TRAVIS_BUILD_DIR/.build
+        - mkdir -p $HOME/.deploy/$KODI_VERSION
+        - cd $HOME/.deploy/$KODI_VERSION
+        - mkdir -p $TRAVIS_BUILD_DIR/.build/$KODI_VERSION
         - ls $TRAVIS_BUILD_DIR
         - > 
           for f in $TRAVIS_BUILD_DIR/*.zip; do
-            unzip $f -d $TRAVIS_BUILD_DIR/.build/$(basename "$f" .zip)
-            python3 $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/$(basename "$f" .zip)/${app_id}
+            unzip $f -d $TRAVIS_BUILD_DIR/.build/$KODI_VERSION/$(basename "$f" .zip)
+            python3 $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/$KODI_VERSION/$(basename "$f" .zip)/${app_id}
           done
-        #- unzip $HOME/$(cat $HOME/zip_name.txt) -d  $TRAVIS_BUILD_DIR/.build
-        #- python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
         - git config credential.helper "store --file=.git/credentials"
         - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
         - git add .
         - git commit --allow-empty -m "$TRAVIS_COMMIT_MESSAGE"
         - git push
-        #- git push --set-upstream origin travis-build-$TRAVIS_BUILD_NUMBER
 
 install:
   - sudo apt-get update && sudo apt-get -y update
@@ -119,7 +104,7 @@ install:
 
 script:
   - bash -x $TRAVIS_BUILD_DIR/build_scripts/build-ia.sh
-    --kodiversion leia
+    --kodiversion $KODI_VERSION
     --no-apt-install
     --arch $ARCH 
     $ANDROID
