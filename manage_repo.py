@@ -276,7 +276,9 @@ def fetch_addon_from_folder(raw_addon_location, target_folder, build_location):
     update_news(metadata_path, changelog)
 
     addon_metadata = parse_metadata(metadata_path)
-    addon_target_folder = os.path.join(target_folder, addon_metadata.id)
+    addon_target_folder = os.path.join(
+        target_folder, '{0}+{1}'.format(
+        addon_metadata.id, addon_metadata.platform))
 
     ignore = ['*.pyc', '*.pyo', '*.swp', '*.zip', '.gitignore', '.travis.yml',
               'requirements.txt', '__pycache__', 'tox.ini', '.tox']
