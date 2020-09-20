@@ -1,3 +1,10 @@
+stages:
+  - compile
+  - deploy
+os: linux
+dist: xenial
+language: cpp
+compiler: gcc
 env:
   global:
     - app_id=inputstream.adaptive.testing
@@ -5,65 +12,59 @@ env:
 
 jobs:
   include:
-    - stage: compile
-      os: linux
-      dist: xenial
-      language: cpp
-      compiler: gcc
-      env:
-        - ANDROID="" ARCH="aarch64" KODI_VERSION="leia"
-        - ANDROID="" ARCH="aarch64" KODI_VERSION="matrix"
+    - env: ANDROID="" ARCH="aarch64" KODI_VERSION="leia"
       workspaces:
         create:
-          name: linux-aarch64
+          name: linux-aarch64-leia
+          paths: .
+    - env: ANDROID="" ARCH="aarch64" KODI_VERSION="matrix"
+      workspaces:
+        create:
+          name: linux-aarch64-matrix
+          paths: .
+          
+    - env: ANDROID="" ARCH="armv7" KODI_VERSION="leia"
+      workspaces:
+        create:
+          name: linux-armv7-leia
+          paths: .
+    - env: ANDROID="" ARCH="armv7" KODI_VERSION="matrix"
+      workspaces:
+        create:
+          name: linux-armv7-matrix
           paths: .
 
-    - os: linux
-      dist: xenial
-      language: cpp
-      compiler: gcc
-      env:
-        - ANDROID="" ARCH="armv7" KODI_VERSION="leia"
-        - ANDROID="" ARCH="armv7" KODI_VERSION="matrix"
+    - env: ANDROID="" ARCH="x86_64" KODI_VERSION="leia"
       workspaces:
         create:
-          name: linux-armv7
+          name: linux-x86_64-leia
+          paths: .
+    - env: ANDROID="" ARCH="x86_64" KODI_VERSION="matrix"
+      workspaces:
+        create:
+          name: linux-x86_64-matrix
           paths: .
 
-    - os: linux
-      dist: xenial
-      language: cpp
-      compiler: gcc
-      env:
-        - ANDROID="" ARCH="x86_64" KODI_VERSION="leia"
-        - ANDROID="" ARCH="x86_64" KODI_VERSION="matrix"
+    - env: ANDROID=" --android" ARCH="aarch64" KODI_VERSION="leia"
       workspaces:
         create:
-          name: linux-x86_64
+          name: android-aarch64-leia
           paths: .
-
-    - os: linux
-      dist: xenial
-      language: cpp
-      compiler: gcc
-      env:
-        - ANDROID=" --android" ARCH="aarch64" KODI_VERSION="leia"
-        - ANDROID=" --android" ARCH="aarch64" KODI_VERSION="matrix"
+    - env: ANDROID=" --android" ARCH="aarch64" KODI_VERSION="matrix"
       workspaces:
         create:
-          name: android-aarch64
+          name: android-aarch64-matrix
           paths: .
-
-    - os: linux
-      dist: xenial
-      language: cpp
-      compiler: gcc
-      env:
-        - ANDROID=" --android" ARCH="armv7" KODI_VERSION="leia"
-        - ANDROID=" --android" ARCH="armv7" KODI_VERSION="matrix"
+    
+    - env: ANDROID=" --android" ARCH="armv7" KODI_VERSION="leia"
       workspaces:
         create:
-          name: android-armv7
+          name: android-armv7-leia
+          paths: .
+    - env: ANDROID=" --android" ARCH="armv7" KODI_VERSION="matrix"
+      workspaces:
+        create:
+          name: android-armv7-matrix
           paths: .
 
     - stage: deploy
@@ -75,11 +76,16 @@ jobs:
         - KODI_VERSION="matrix"
       workspaces:
         use:
-          - linux-aarch64
-          - linux-armv7
-          - linux-x86_64
-          - android-aarch64
-          - android-armv7
+          - linux-aarch64-leia
+          - linux-aarch64-matrix
+          - linux-armv7-leia
+          - linux-armv7-matrix
+          - linux-x86_64-leia
+          - linux-x86_64-matrix
+          - android-aarch64-leia
+          - android-aarch64-matrix
+          - android-armv7-leia
+          - android-armv7-matrix
       install:
         - sudo apt-get update && sudo apt-get -y update
         - sudo apt install -y --no-install-recommends build-essential git unzip python3 python3-pip
