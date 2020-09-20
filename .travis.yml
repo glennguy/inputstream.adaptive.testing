@@ -14,7 +14,8 @@ jobs:
       language: cpp
       compiler: gcc
       env:
-        - ANDROID="" ARCH="aarch64"
+        - ANDROID="" ARCH="aarch64" KODI_VERSION="leia"
+        - ANDROID="" ARCH="aarch64" KODI_VERSION="matrix"
       workspaces:
         create:
           name: linux-aarch64
@@ -25,7 +26,8 @@ jobs:
       language: cpp
       compiler: gcc
       env:
-        - ANDROID="" ARCH="armv7"
+        - ANDROID="" ARCH="armv7" KODI_VERSION="leia"
+        - ANDROID="" ARCH="armv7" KODI_VERSION="matrix"
       workspaces:
         create:
           name: linux-armv7
@@ -36,7 +38,8 @@ jobs:
       language: cpp
       compiler: gcc
       env:
-        - ANDROID="" ARCH="x86_64"
+        - ANDROID="" ARCH="x86_64" KODI_VERSION="leia"
+        - ANDROID="" ARCH="x86_64" KODI_VERSION="matrix"
       workspaces:
         create:
           name: linux-x86_64
@@ -47,7 +50,8 @@ jobs:
       language: cpp
       compiler: gcc
       env:
-        - ANDROID=" --android" ARCH="aarch64"
+        - ANDROID=" --android" ARCH="aarch64" KODI_VERSION="leia"
+        - ANDROID=" --android" ARCH="aarch64" KODI_VERSION="matrix"
       workspaces:
         create:
           name: android-aarch64
@@ -58,7 +62,8 @@ jobs:
       language: cpp
       compiler: gcc
       env:
-        - ANDROID=" --android" ARCH="armv7"
+        - ANDROID=" --android" ARCH="armv7" KODI_VERSION="leia"
+        - ANDROID=" --android" ARCH="armv7" KODI_VERSION="matrix"
       workspaces:
         create:
           name: android-armv7
@@ -68,6 +73,9 @@ jobs:
       os: linux
       dist: xenial
       language: python
+      env:
+        - KODI_VERSION="leia"
+        - KODI_VERSION="matrix"
       workspaces:
         use:
           - linux-aarch64
