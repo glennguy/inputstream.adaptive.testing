@@ -92,7 +92,7 @@ jobs:
       install:
         - sudo apt-get update && sudo apt-get -y update
         - sudo apt install -y --no-install-recommends build-essential git unzip python3 python3-pip
-        - sudo pip3 install gitpython
+        - sudo pip install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
         - git config --global user.email "travis@travis-ci.org"
@@ -104,7 +104,7 @@ jobs:
         - > 
           for f in $TRAVIS_BUILD_DIR/*.zip; do
             unzip $f -d $TRAVIS_BUILD_DIR/.build/$KODI_VERSION/$(basename "$f" .zip)
-            python3 $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/$KODI_VERSION/$(basename "$f" .zip)/${app_id}
+            python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/$KODI_VERSION/$(basename "$f" .zip)/${app_id}
           done
         - git config credential.helper "store --file=.git/credentials"
         - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
