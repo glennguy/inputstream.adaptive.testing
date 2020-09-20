@@ -274,12 +274,14 @@ def fetch_addon_from_folder(raw_addon_location, target_folder, build_location):
     update_news(metadata_path, changelog)
 
     addon_metadata = parse_metadata(metadata_path)
+    addon_target_folder_basename = '{0}+{1}'.format(
+        addon_metadata.id, addon_metadata.platform.text)
     addon_target_folder = os.path.join(
-        target_folder, '{0}+{1}'.format(
-        addon_metadata.id, addon_metadata.platform.text))
+        target_folder, addon_target_folder_basename)
 
     ignore = ['*.pyc', '*.pyo', '*.swp', '*.zip', '.gitignore', '.travis.yml',
-              'requirements.txt', '__pycache__', 'tox.ini', '.tox']
+              'requirements.txt', '__pycache__', 'tox.ini', '.tox',
+              '*.patch', 'build_scripts']
 
     # Create the compressed add-on archive.
     if not os.path.isdir(addon_target_folder):
@@ -307,7 +309,11 @@ def fetch_addon_from_folder(raw_addon_location, target_folder, build_location):
     if not os.path.samefile(build_location, addon_target_folder):
         copy_metadata_files(
             build_location, addon_target_folder, addon_metadata)
-
+    
+    # set path for addons.xml
+    addons_path = addon_metadata.platform.find('../').SubElement('path')
+    addons_path.text = os.path.join(
+        addon_target_folder_basename, get_archive_basename(addon_metadata))
     return addon_metadata
 
 
