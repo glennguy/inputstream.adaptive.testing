@@ -1,6 +1,3 @@
-stages:
-  - compile
-  - deploy
 os: linux
 dist: xenial
 language: cpp
@@ -12,7 +9,8 @@ env:
 
 jobs:
   include:
-    - env: ANDROID="" ARCH="aarch64" KODI_VERSION="leia"
+    - stage: compile
+      env: ANDROID="" ARCH="aarch64" KODI_VERSION="leia"
       workspaces:
         create:
           name: linux-aarch64-leia
