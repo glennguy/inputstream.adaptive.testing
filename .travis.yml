@@ -106,6 +106,7 @@ jobs:
               python3 $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/$KODI_VERSION/$(basename "$f" .zip)/${app_id}
             fi
           done
+        - cd $HOME/.deploy/
         - git config credential.helper "store --file=.git/credentials"
         - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
         - git add .
@@ -126,6 +127,7 @@ jobs:
               python3 $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/$KODI_VERSION/$(basename "$f" .zip)/${app_id}
             fi
           done
+        - cd $HOME/.deploy/
         - git config credential.helper "store --file=.git/credentials"
         - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
         - git add .
