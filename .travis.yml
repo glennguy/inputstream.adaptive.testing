@@ -16,6 +16,7 @@ jobs:
           name: linux-aarch64-leia
           paths: .
     - env: ANDROID="" ARCH="aarch64" KODI_VERSION="matrix"
+      dist: bionic
       workspaces:
         create:
           name: linux-aarch64-matrix
