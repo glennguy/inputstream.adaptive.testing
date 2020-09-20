@@ -101,8 +101,8 @@ jobs:
         - ls $TRAVIS_BUILD_DIR
         - > 
           for f in $TRAVIS_BUILD_DIR/*.zip; do
-            unzip $f -d $TRAVIS_BUILD_DIR/.build/${f%.*}
-            python3 $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${f%.*}/${app_id}
+            unzip $f -d $TRAVIS_BUILD_DIR/.build/$(basename "$f" .zip)
+            python3 $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/$(basename "$f" .zip)/${app_id}
           done
         #- unzip $HOME/$(cat $HOME/zip_name.txt) -d  $TRAVIS_BUILD_DIR/.build
         #- python $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/${app_id}
