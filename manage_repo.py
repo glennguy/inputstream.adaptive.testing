@@ -236,7 +236,7 @@ def fetch_addon_from_git(addon_location, target_folder):
         addon_metadata = parse_metadata(metadata_path)
         addon_target_folder = os.path.join(
             target_folder, '{0}+{1}'.format(
-            addon_metadata.id, addon_metadata.platform)
+            addon_metadata.id, addon_metadata.platform))
 
         # Create the compressed add-on archive.
         if not os.path.isdir(addon_target_folder):
