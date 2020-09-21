@@ -311,6 +311,7 @@ def fetch_addon_from_folder(raw_addon_location, target_folder, build_location):
             build_location, addon_target_folder, addon_metadata)
     
     # set path for addons.xml
+    xml.etree.ElementTree.dump(addon_metadata.root)
     addons_path = xml.etree.ElementTree.SubElement(addon_metadata.root.find(
         './addon/extension[@point="xbmc.addon.metadata"]'), 'path')
     addons_path.text = os.path.join(
