@@ -95,8 +95,8 @@ jobs:
       script:
         - git config --global user.email "travis@travis-ci.org"
         - git config --global user.name "Travis CI"
-        - $TRAVIS_BUILD_DIR/build_scripts/deploy.sh leia
-        - $TRAVIS_BUILD_DIR/build_scripts/deploy.sh matrix
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh leia
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh matrix
         - cd $HOME/.deploy/
         - git config credential.helper "store --file=.git/credentials"
         - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
