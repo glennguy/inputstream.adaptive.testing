@@ -85,8 +85,8 @@ jobs:
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
         - git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
-        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh leia
-        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh matrix
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r main
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r main
     
     - stage: deploy-linux-aarch64
       language: python
@@ -100,8 +100,8 @@ jobs:
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
-        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh leia
-        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh matrix
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r linux-aarch64
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r linux-aarch64
     
     - stage: deploy-linux-armv7
       language: python
@@ -115,8 +115,8 @@ jobs:
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
-        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh leia
-        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh matrix
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r linux-armv7
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r linux-armv7
     
     - stage: deploy-linux-x86_64
       language: python
@@ -130,8 +130,8 @@ jobs:
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
-        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh leia
-        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh matrix
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r linux-x86_64
+        - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r linux-x86_64
         - git push
 
 install:
