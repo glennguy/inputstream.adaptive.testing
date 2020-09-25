@@ -29,4 +29,4 @@ git config credential.helper "store --file=.git/credentials"
 echo "https://${GH_TOKEN}:@github.com" > .git/credentials
 git add .
 git commit --allow-empty -m "$TRAVIS_COMMIT_MESSAGE"
-git push
+git push --set-upstream origin travis-build-$TRAVIS_BUILD_NUMBER
