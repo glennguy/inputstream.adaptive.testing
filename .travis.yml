@@ -84,7 +84,6 @@ jobs:
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
-        - git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r main
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r main
     
@@ -132,7 +131,6 @@ jobs:
       script:
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r linux-x86_64
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r linux-x86_64
-        - git push
 
 install:
   - sudo apt-get update && sudo apt-get -y update

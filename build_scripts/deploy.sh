@@ -10,9 +10,8 @@ while getopts ":k:r:" opt; do
   esac
 done
 
-git config --global user.email "travis@travis-ci.org"
-git config --global user.name "Travis CI"
-
+cd $HOME/.deploy
+git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
 mkdir -p $HOME/.deploy/$REPO/$KODI_VERSION
 cd $HOME/.deploy/$REPO/$KODI_VERSION
 for f in $TRAVIS_BUILD_DIR/*.zip; do
@@ -24,7 +23,10 @@ for f in $TRAVIS_BUILD_DIR/*.zip; do
 done
 
 cd $HOME/.deploy/
+git config --global user.email "travis@travis-ci.org"
+git config --global user.name "Travis CI"
 git config credential.helper "store --file=.git/credentials"
 echo "https://${GH_TOKEN}:@github.com" > .git/credentials
 git add .
 git commit --allow-empty -m "$TRAVIS_COMMIT_MESSAGE"
+git push
