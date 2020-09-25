@@ -11,7 +11,7 @@ while getopts ":k:r:" opt; do
 done
 
 cd $HOME/.deploy
-git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
+git checkout travis-build-$TRAVIS_BUILD_NUMBER 2>/dev/null || git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
 mkdir -p $HOME/.deploy/$REPO/$KODI_VERSION
 cd $HOME/.deploy/$REPO/$KODI_VERSION
 for f in $TRAVIS_BUILD_DIR/*.zip; do
