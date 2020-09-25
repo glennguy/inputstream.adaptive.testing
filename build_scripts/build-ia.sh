@@ -177,7 +177,7 @@ if [[ $KODI_VERSION == "leia" ]]; then
         touch $IA_HOME/patchapplied
     fi
 else
-    git checkout master
+    git checkout Matrix
     if [[ -f $IA_HOME/patchapplied ]]; then
         git apply -R Leia.patch
         rm $IA_HOME/patchapplied
