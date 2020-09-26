@@ -78,6 +78,7 @@ jobs:
           packages:
           - aria2
           - gnu-getopt
+          - coreutils
       install:
         - brew link --force gnu-getopt
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
@@ -95,6 +96,7 @@ jobs:
           packages:
           - aria2
           - gnu-getopt
+          - coreutils
       install:
         - brew link --force gnu-getopt
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
