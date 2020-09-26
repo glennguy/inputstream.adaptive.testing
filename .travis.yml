@@ -80,6 +80,7 @@ jobs:
           - gnu-getopt
       install:
         - brew link --force gnu-getopt
+        - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       workspaces:
@@ -96,6 +97,7 @@ jobs:
           - gnu-getopt
       install:
         - brew link --force gnu-getopt
+        - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       workspaces:
