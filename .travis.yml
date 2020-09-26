@@ -69,6 +69,21 @@ jobs:
         create:
           name: android-armv7-matrix
           paths: .
+    
+    - env: ANDROID="" ARCH="x86_64" KODI_VERSION="leia"
+      os: osx
+      osx_image: xcode10.2
+      workspaces:
+        create:
+          name: darwin-x86_64-leia
+          paths: .
+    - env: ANDROID="" ARCH="x86_64" KODI_VERSION="matrix"
+      os: osx
+      osx_image: xcode10.2
+      workspaces:
+        create:
+          name: darwin-x86_64-matrix
+          paths: .
 
     - stage: deploy-main
       language: python
