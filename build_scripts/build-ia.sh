@@ -17,21 +17,21 @@ if [[ ${PIPESTATUS[0]} -ne 4 ]]; then
     exit 1
 fi
 
-OPTIONS=ah:k:cnbr
-LONGOPTS=android,arch:,kodiversion:,clean-deps,no-apt-install,clean-build,rebuild
+OPTIONS=ph:k:cnbr
+LONGOPTS=platform:,arch:,kodiversion:,clean-deps,no-apt-install,clean-build,rebuild
 ! PARSED=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name "$0" -- "$@")
 if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
     exit 2
 fi
 
 eval set -- "$PARSED"
-ARCH="" KODI_VERSION="" PLATFORM=linux CLEAN_DEPS=""
+ARCH="" KODI_VERSION="" PLATFORM="" CLEAN_DEPS=""
 NO_APT_INSTALL="" CLEAN_BUILD="" REBUILD=""
 while true; do
     case "$1" in
-        -a|--android)
-            PLATFORM=android
-            shift
+        -p|--platform)
+            PLATFORM="$2"
+            shift 2
             ;;
         -h|--arch)
             ARCH="$2"
@@ -72,8 +72,8 @@ declare -A ARCHS=( ["linux-armv7"]="arm-linux-gnueabihf" \
                    ["linux-aarch64"]="aarch64-linux-gnu" \
                    ["linux-x86_64"]="x86_64-linux" \
                    ["android-armv7"]="arm-linux-androideabi" \
-                   ["android-aarch64"]="aarch64-linux-android" )
-
+                   ["android-aarch64"]="aarch64-linux-android" \
+                   ["darwin-x86_64"]="x86_64-apple-darwin" )
 
 if [[ $KODI_VERSION == "leia" ]]; then
     KODI_BRANCH="Leia"
@@ -91,6 +91,15 @@ case $ARCH in
         ;;
     *)
         echo "arch not valid, must be one of [x86_64,aarch64,armv7]"
+        exit 3
+        ;;
+esac
+
+case $PLATFORM in
+    android|darwin|linux)
+        ;;
+    *)
+        echo "platform not valid, must be one of [android,darwin,linux]"
         exit 3
         ;;
 esac

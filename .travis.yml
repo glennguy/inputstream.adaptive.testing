@@ -10,67 +10,67 @@ env:
 jobs:
   include:
     - stage: compile
-      env: ANDROID="" ARCH="aarch64" KODI_VERSION="leia"
+      env: PLATFORM="linux" ARCH="aarch64" KODI_VERSION="leia"
       workspaces:
         create:
           name: linux-aarch64-leia
           paths: .
-    - env: ANDROID="" ARCH="aarch64" KODI_VERSION="matrix"
+    - env: PLATFORM="linux" ARCH="aarch64" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: linux-aarch64-matrix
           paths: .
           
-    - env: ANDROID="" ARCH="armv7" KODI_VERSION="leia"
+    - env: PLATFORM="linux" ARCH="armv7" KODI_VERSION="leia"
       workspaces:
         create:
           name: linux-armv7-leia
           paths: .
-    - env: ANDROID="" ARCH="armv7" KODI_VERSION="matrix"
+    - env: PLATFORM="linux" ARCH="armv7" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: linux-armv7-matrix
           paths: .
 
-    - env: ANDROID="" ARCH="x86_64" KODI_VERSION="leia"
+    - env: PLATFORM="linux" ARCH="x86_64" KODI_VERSION="leia"
       workspaces:
         create:
           name: linux-x86_64-leia
           paths: .
-    - env: ANDROID="" ARCH="x86_64" KODI_VERSION="matrix"
+    - env: PLATFORM="linux" ARCH="x86_64" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: linux-x86_64-matrix
           paths: .
 
-    - env: ANDROID=" --android" ARCH="aarch64" KODI_VERSION="leia"
+    - env: PLATFORM="android" ARCH="aarch64" KODI_VERSION="leia"
       workspaces:
         create:
           name: android-aarch64-leia
           paths: .
-    - env: ANDROID=" --android" ARCH="aarch64" KODI_VERSION="matrix"
+    - env: PLATFORM="android" ARCH="aarch64" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: android-aarch64-matrix
           paths: .
     
-    - env: ANDROID=" --android" ARCH="armv7" KODI_VERSION="leia"
+    - env: PLATFORM="android" ARCH="armv7" KODI_VERSION="leia"
       workspaces:
         create:
           name: android-armv7-leia
           paths: .
-    - env: ANDROID=" --android" ARCH="armv7" KODI_VERSION="matrix"
+    - env: PLATFORM="android" ARCH="armv7" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: android-armv7-matrix
           paths: .
     
-    - env: ANDROID="" ARCH="x86_64" KODI_VERSION="leia"
+    - env: PLATFORM="darwin" ARCH="x86_64" KODI_VERSION="leia"
       os: osx
       osx_image: xcode11.3
       addons:
@@ -78,7 +78,6 @@ jobs:
           packages:
           - aria2
           - gnu-getopt
-          - coreutils
       install:
         - brew link --force gnu-getopt
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
@@ -88,7 +87,7 @@ jobs:
         create:
           name: darwin-x86_64-leia
           paths: .
-    - env: ANDROID="" ARCH="x86_64" KODI_VERSION="matrix"
+    - env: PLATFORM="darwin" ARCH="x86_64" KODI_VERSION="matrix"
       os: osx
       osx_image: xcode11.3
       addons:
@@ -96,7 +95,6 @@ jobs:
           packages:
           - aria2
           - gnu-getopt
-          - coreutils
       install:
         - brew link --force gnu-getopt
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
@@ -115,6 +113,8 @@ jobs:
           - android-aarch64-matrix
           - android-armv7-leia
           - android-armv7-matrix
+          - darwin-x86_64-leia
+          - darwin-x86_64-matrix
       install:
         - sudo apt-get update && sudo apt-get -y update
         - sudo apt install -y --no-install-recommends build-essential git unzip
