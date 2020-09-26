@@ -178,5 +178,5 @@ script:
     --kodiversion $KODI_VERSION
     --no-apt-install
     --arch $ARCH 
-    $ANDROID
+    --platform $PLATFORM
   - mv $HOME/*.zip $TRAVIS_BUILD_DIR
