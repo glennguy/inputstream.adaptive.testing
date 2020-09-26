@@ -72,7 +72,7 @@ jobs:
     
     - env: ANDROID="" ARCH="x86_64" KODI_VERSION="leia"
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.3
       addons:
         homebrew:
           packages:
@@ -88,7 +88,7 @@ jobs:
           paths: .
     - env: ANDROID="" ARCH="x86_64" KODI_VERSION="matrix"
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.3
       addons:
         homebrew:
           packages:
