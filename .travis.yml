@@ -78,6 +78,7 @@ jobs:
           packages:
           - aria2
           - gnu-getopt
+          - bash
       install:
         - brew link --force gnu-getopt
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
@@ -95,6 +96,7 @@ jobs:
           packages:
           - aria2
           - gnu-getopt
+          - bash
       install:
         - brew link --force gnu-getopt
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
@@ -174,7 +176,8 @@ install:
   - sudo apt install -y --no-install-recommends build-essential git cmake unzip aria2 default-jdk python3
 
 script:
-  - bash -x $TRAVIS_BUILD_DIR/build_scripts/build-ia.sh
+  - [[ $PLATFORM = "darwin" ]] && alias bsh="/usr/local/bin/bash" || alias bsh="/bin/bash"
+  - bsh -x $TRAVIS_BUILD_DIR/build_scripts/build-ia.sh
     --kodiversion $KODI_VERSION
     --no-apt-install
     --arch $ARCH 
