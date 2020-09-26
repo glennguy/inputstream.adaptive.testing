@@ -77,7 +77,9 @@ jobs:
         homebrew:
           packages:
           - aria2
+          - gnu-getopt
       install:
+        - brew link --force gnu-getopt
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       workspaces:
@@ -91,7 +93,9 @@ jobs:
         homebrew:
           packages:
           - aria2
+          - gnu-getopt
       install:
+        - brew link --force gnu-getopt
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       workspaces:
