@@ -14,7 +14,7 @@ cd $HOME/.deploy
 git checkout travis-build-$TRAVIS_BUILD_NUMBER 2>/dev/null || git checkout -b travis-build-$TRAVIS_BUILD_NUMBER
 mkdir -p $HOME/.deploy/$REPO/$KODI_VERSION
 cd $HOME/.deploy/$REPO/$KODI_VERSION
-for f in $TRAVIS_BUILD_DIR/*.zip; do
+for f in $HOME/zips/*.zip; do
   if [[ $f == *"$KODI_VERSION"* ]]; then
     mkdir -p $TRAVIS_BUILD_DIR/.build/$REPO/$KODI_VERSION/$(basename "$f" .zip)
     unzip $f -d $TRAVIS_BUILD_DIR/.build/$REPO/$KODI_VERSION/$(basename "$f" .zip)
