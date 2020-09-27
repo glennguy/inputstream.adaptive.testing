@@ -215,5 +215,4 @@ cmake -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON -DCMAKE_TOOLCHAIN_FILE=$KOD
 make package-$ADDON_ID
 
 ### COPY ZIP ###
-mkdir -p $HOME/zips
-mv $KODI_GIT/cmake/addons/$ADDON_ID/$ADDON_ID-prefix/src/$ADDON_ID-build/addon-$ADDON_ID*.zip $HOME/zips/$ZIP_NAME && cd $HOME/zips && ls $ZIP_NAME
+mv $KODI_GIT/cmake/addons/$ADDON_ID/$ADDON_ID-prefix/src/$ADDON_ID-build/addon-$ADDON_ID*.zip $HOME/$ZIP_NAME && cd $HOME && ls $ZIP_NAME
