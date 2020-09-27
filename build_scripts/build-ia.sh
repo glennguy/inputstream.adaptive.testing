@@ -210,7 +210,6 @@ cd $KODI_GIT/cmake/addons/$ADDON_ID
 
 ls -a $(dirname "$IA_HOME")
 ls -a $IA_HOME
-ls -a /home/travis/build/glennguy/inputstream.adaptive.testing
 
 cmake -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON -DCMAKE_TOOLCHAIN_FILE=$KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake -DADDONS_TO_BUILD=$ADDON_ID -DADDON_SRC_PREFIX="$(dirname "$IA_HOME")" -DADDONS_DEFINITION_DIR=$KODI_GIT/tools/depends/target/binary-addons/addons2 -DPACKAGE_ZIP=1 $KODI_GIT/cmake/addons
 make package-$ADDON_ID
