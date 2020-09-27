@@ -104,8 +104,6 @@ case $PLATFORM in
         ;;
 esac
 
-
-if [[ $PLATFORM = "darwin" ]]; then IA_HOME="$(dirname "$(dirname $(readlink $0))")"; fi
 ZIP_NAME=$PLATFORM-$ARCH-$KODI_VERSION-$(git -C $IA_HOME describe).zip
 
 if [[ $REBUILD = yes ]]; then
