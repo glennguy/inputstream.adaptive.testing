@@ -195,7 +195,7 @@ install:
 
 script:
   - shopt -s expand_aliases
-  - '[[ $PLATFORM = "darwin" ]] && alias bsh="/usr/local/bin/bash" && export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH" || alias bsh="/bin/bash"'
+  - '[[ $TRAVIS_OS_NAME = "osx" ]] && alias bsh="/usr/local/bin/bash" && export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH" || alias bsh="/bin/bash"'
   - bsh -x $TRAVIS_BUILD_DIR/build_scripts/build-ia.sh
     --kodiversion $KODI_VERSION
     --no-apt-install
