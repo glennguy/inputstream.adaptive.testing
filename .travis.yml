@@ -201,4 +201,5 @@ script:
     --no-apt-install
     --arch $ARCH 
     --platform $PLATFORM
-  - mv $HOME/*.zip $TRAVIS_BUILD_DIR
+  - mkdir -p $HOME/zips  
+  - mv $HOME/*.zip $HOME/zips  
