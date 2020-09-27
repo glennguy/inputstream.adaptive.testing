@@ -101,8 +101,10 @@ jobs:
       os: osx
       osx_image: xcode10.2
       before_cache:
-        - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then brew cleanup; fi
-        - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then find /usr/local/Homebrew \! -regex ".+\.git.+" -delete; fi
+        - ls -a /usr/local/Homebrew
+        - brew cleanup
+        - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+        - ls -a /usr/local/Homebrew
       cache:
         directories:
           - $HOME/Library/Caches/Homebrew
