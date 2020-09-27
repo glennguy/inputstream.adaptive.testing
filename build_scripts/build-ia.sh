@@ -1,6 +1,6 @@
 #!/bin/bash
 #Ubuntu 16.04 LTS
-IA_HOME="$(dirname "$(dirname "$(readlink $0 || readlink -f $0)")")"
+IA_HOME="$(dirname "$(dirname $(readlink -f $0))")"
 ADDON_ID="inputstream.adaptive.testing"
 KODI_GIT="$HOME/kodi"
 ANDROID_ROOT=$HOME/kodi-android-tools
@@ -104,6 +104,8 @@ case $PLATFORM in
         ;;
 esac
 
+
+if [[ $PLATFORM = "darwin" ]]; then IA_HOME="$(dirname "$(dirname $(readlink $0))")"; fi
 ZIP_NAME=$PLATFORM-$ARCH-$KODI_VERSION-$(git -C $IA_HOME describe).zip
 
 if [[ $REBUILD = yes ]]; then
