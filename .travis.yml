@@ -176,6 +176,7 @@ install:
   - sudo apt install -y --no-install-recommends build-essential git cmake unzip aria2 default-jdk python3
 
 script:
+  - shopt -s expand_aliases
   - '[[ $PLATFORM = "darwin" ]] && alias bsh="/usr/local/bin/bash" || alias bsh="/bin/bash"'
   - bsh -x $TRAVIS_BUILD_DIR/build_scripts/build-ia.sh
     --kodiversion $KODI_VERSION
