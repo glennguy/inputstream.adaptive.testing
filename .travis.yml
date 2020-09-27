@@ -87,6 +87,7 @@ jobs:
           - gnu-getopt
           - bash
           - coreutils
+          update: true
       install:
         - brew link --force gnu-getopt
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
