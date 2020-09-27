@@ -14,61 +14,61 @@ jobs:
       workspaces:
         create:
           name: linux-aarch64-leia
-          paths: .
+          paths: $HOME/zips
     - env: PLATFORM="linux" ARCH="aarch64" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: linux-aarch64-matrix
-          paths: .
+          paths: $HOME/zips
           
     - env: PLATFORM="linux" ARCH="armv7" KODI_VERSION="leia"
       workspaces:
         create:
           name: linux-armv7-leia
-          paths: .
+          paths: $HOME/zips
     - env: PLATFORM="linux" ARCH="armv7" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: linux-armv7-matrix
-          paths: .
+          paths: $HOME/zips
 
     - env: PLATFORM="linux" ARCH="x86_64" KODI_VERSION="leia"
       workspaces:
         create:
           name: linux-x86_64-leia
-          paths: .
+          paths: $HOME/zips
     - env: PLATFORM="linux" ARCH="x86_64" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: linux-x86_64-matrix
-          paths: .
+          paths: $HOME/zips
 
     - env: PLATFORM="android" ARCH="aarch64" KODI_VERSION="leia"
       workspaces:
         create:
           name: android-aarch64-leia
-          paths: .
+          paths: $HOME/zips
     - env: PLATFORM="android" ARCH="aarch64" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: android-aarch64-matrix
-          paths: .
+          paths: $HOME/zips
     
     - env: PLATFORM="android" ARCH="armv7" KODI_VERSION="leia"
       workspaces:
         create:
           name: android-armv7-leia
-          paths: .
+          paths: $HOME/zips
     - env: PLATFORM="android" ARCH="armv7" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
         create:
           name: android-armv7-matrix
-          paths: .
+          paths: $HOME/zips
     
     - env: PLATFORM="darwin" ARCH="x86_64" KODI_VERSION="leia"
       os: osx
@@ -96,7 +96,7 @@ jobs:
       workspaces:
         create:
           name: darwin-x86_64-leia
-          paths: .
+          paths: $HOME/zips
     - env: PLATFORM="darwin" ARCH="x86_64" KODI_VERSION="matrix"
       os: osx
       osx_image: xcode10.2
@@ -123,7 +123,7 @@ jobs:
       workspaces:
         create:
           name: darwin-x86_64-matrix
-          paths: .
+          paths: $HOME/zips
 
     - stage: deploy-main
       language: python
