@@ -1,6 +1,6 @@
 #!/bin/bash
 #Ubuntu 16.04 LTS
-IA_HOME="$(dirname "$(dirname $(readlink $0 || readlink -f $0))")"
+IA_HOME="$(dirname "$(dirname "$(readlink $0 || readlink -f $0)")")"
 ADDON_ID="inputstream.adaptive.testing"
 KODI_GIT="$HOME/kodi"
 ANDROID_ROOT=$HOME/kodi-android-tools
