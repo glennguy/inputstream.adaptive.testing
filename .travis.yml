@@ -149,7 +149,7 @@ jobs:
     - stage: deploy-main-macos
       os: osx
       osx_image: xcode10.2
-      language: python
+      language: shell
       workspaces:
         use:
           - darwin-x86_64-leia
