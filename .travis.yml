@@ -76,7 +76,7 @@ jobs:
       before_cache:
         - ls -a /usr/local/Homebrew
         - brew cleanup
-        - find /usr/local/Homebrew \! -regex "\.git" -delete
+        - find /usr/local/Homebrew \! -regex ".*\.git.*" -delete
         - ls -a /usr/local/Homebrew
       cache:
         directories:
@@ -105,7 +105,7 @@ jobs:
       before_cache:
         - ls -a /usr/local/Homebrew
         - brew cleanup
-        - find /usr/local/Homebrew \! -regex "\.git" -delete
+        - find /usr/local/Homebrew \! -regex ".*\.git.*" -delete
         - ls -a /usr/local/Homebrew
       cache:
         directories:
@@ -149,16 +149,32 @@ jobs:
     - stage: deploy-main-macos
       os: osx
       osx_image: xcode10.2
+      before_cache:
+        - ls -a /usr/local/Homebrew
+        - brew cleanup
+        - find /usr/local/Homebrew \! -regex ".*\.git.*" -delete
+        - ls -a /usr/local/Homebrew
+      cache:
+        directories:
+          - $HOME/Library/Caches/Homebrew
+          - /usr/local/Homebrew
+      addons:
+        homebrew:
+          packages:
+          - aria2
+          - gnu-getopt
+          - bash
+          - coreutils
+          update: true
+      install:
+        - brew link --force gnu-getopt
+        - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
+        - pip3 install gitpython
       language: shell
       workspaces:
         use:
           - darwin-x86_64-leia
           - darwin-x86_64-matrix
-      install:
-        - sudo apt-get update && sudo apt-get -y update
-        - sudo apt install -y --no-install-recommends build-essential git unzip
-        - pip3 install gitpython
-        - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r main
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r main
