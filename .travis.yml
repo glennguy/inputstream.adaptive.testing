@@ -147,6 +147,8 @@ jobs:
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r main
     
     - stage: deploy-main-macos
+      os: osx
+      osx_image: xcode10.2
       language: python
       workspaces:
         use:
