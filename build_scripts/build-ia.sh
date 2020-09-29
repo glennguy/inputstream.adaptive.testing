@@ -155,11 +155,6 @@ if [[ $PLATFORM = android ]]; then
     EXTRA_OPTIONS="--with-ndk-api=21 --with-sdk-path=$ANDROID_ROOT/android-sdk --with-ndk-path=$ANDROID_ROOT/android-ndk-$NDK_VER  --with-toolchain=$TOOLCHAIN"
 fi
 
-if [[ $PLATFORM = darwin ]]; then
-    EXTRA_OPTIONS="--with-sdk=10.14"
-fi
-
-
 ### CONFIRE KODI BUILD TOOLS ###
 if  [[ ! -d $KODI_GIT ]]; then
     git clone https://github.com/xbmc/xbmc --branch $KODI_BRANCH --depth 1 $KODI_GIT
@@ -171,6 +166,13 @@ else
         git remote set-branches --add origin $KODI_BRANCH
         git fetch --depth 1 origin $KODI_BRANCH
         git checkout $KODI_BRANCH
+    fi
+fi
+
+if [[ $PLATFORM = darwin ]]; then
+    EXTRA_OPTIONS="--with-sdk=10.15"
+    if [[ $KODI_VERSION = leia ]]; then
+        gsed -i '/10\.14);;/a\          10\.15);;' $KODI_GIT/tools/depends/configure.ac
     fi
 fi
 

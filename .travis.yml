@@ -86,6 +86,7 @@ jobs:
           packages:
           - aria2
           - gnu-getopt
+          - gnu-sed
           - bash
           - coreutils
       install:
@@ -112,6 +113,7 @@ jobs:
           packages:
           - aria2
           - gnu-getopt
+          - gnu-sed
           - bash
           - coreutils
       install:
