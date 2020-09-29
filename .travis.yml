@@ -81,6 +81,7 @@ jobs:
         directories:
           - $HOME/Library/Caches/Homebrew
           - /usr/local/Homebrew
+          - /usr/local/Cellar
       addons:
         homebrew:
           packages:
