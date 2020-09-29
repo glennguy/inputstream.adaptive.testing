@@ -76,7 +76,6 @@ jobs:
       before_cache:
         - ls -a /usr/local/Homebrew
         - brew cleanup
-        - find /usr/local/Homebrew \! -regex ".*\.git.*" -delete
         - ls -a /usr/local/Homebrew
       cache:
         directories:
@@ -104,7 +103,6 @@ jobs:
       before_cache:
         - ls -a /usr/local/Homebrew
         - brew cleanup
-        - find /usr/local/Homebrew \! -regex ".*\.git.*" -delete
         - ls -a /usr/local/Homebrew
       cache:
         directories:
@@ -150,7 +148,6 @@ jobs:
       before_cache:
         - ls -a /usr/local/Homebrew
         - brew cleanup
-        - find /usr/local/Homebrew \! -regex ".*\.git.*" -delete
         - ls -a /usr/local/Homebrew
       cache:
         directories:
