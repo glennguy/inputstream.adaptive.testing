@@ -155,6 +155,11 @@ if [[ $PLATFORM = android ]]; then
     EXTRA_OPTIONS="--with-ndk-api=21 --with-sdk-path=$ANDROID_ROOT/android-sdk --with-ndk-path=$ANDROID_ROOT/android-ndk-$NDK_VER  --with-toolchain=$TOOLCHAIN"
 fi
 
+if [[ $PLATFORM = darwin ]]; then
+    EXTRA_OPTIONS="--with-sdk=10.14"
+fi
+
+
 ### CONFIRE KODI BUILD TOOLS ###
 if  [[ ! -d $KODI_GIT ]]; then
     git clone https://github.com/xbmc/xbmc --branch $KODI_BRANCH --depth 1 $KODI_GIT

@@ -72,7 +72,7 @@ jobs:
     
     - env: PLATFORM="darwin" ARCH="x86_64" KODI_VERSION="leia"
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.3
       before_cache:
         - ls -a /usr/local/Homebrew
         - brew cleanup
@@ -81,7 +81,6 @@ jobs:
         directories:
           - $HOME/Library/Caches/Homebrew
           - /usr/local/Homebrew
-          - /usr/local/Cellar
       addons:
         homebrew:
           packages:
@@ -89,7 +88,6 @@ jobs:
           - gnu-getopt
           - bash
           - coreutils
-          update: true
       install:
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
         - pip3 install gitpython
@@ -100,7 +98,7 @@ jobs:
           paths: $HOME/zips
     - env: PLATFORM="darwin" ARCH="x86_64" KODI_VERSION="matrix"
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.3
       before_cache:
         - ls -a /usr/local/Homebrew
         - brew cleanup
@@ -116,7 +114,6 @@ jobs:
           - gnu-getopt
           - bash
           - coreutils
-          update: true
       install:
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
         - pip3 install gitpython
@@ -145,7 +142,7 @@ jobs:
     
     - stage: deploy-main-macos
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.3
       before_cache:
         - ls -a /usr/local/Homebrew
         - brew cleanup
@@ -161,7 +158,6 @@ jobs:
           - gnu-getopt
           - bash
           - coreutils
-          update: true
       install:
         - echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
         - pip3 install gitpython
