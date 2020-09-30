@@ -179,7 +179,7 @@ fi
 
 if [[ $PLATFORM != windows ]]; then
     cd $KODI_GIT/tools/depends
-    ./ bootstrap
+    ./bootstrap
     ./configure --host=${ARCHS[$PLATFORM-$ARCH]} --disable-debug --prefix=$HOME/xbmc-depends $CONFIGURE_EXTRA_OPTIONS
 else
     case $ARCH in
