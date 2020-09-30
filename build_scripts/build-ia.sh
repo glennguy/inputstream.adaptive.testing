@@ -4,7 +4,8 @@ IA_HOME="$(dirname "$(dirname "$(readlink "$0" || readlink -f "$0")")")"
 ADDON_ID="inputstream.adaptive.testing"
 KODI_GIT="$HOME/kodi"
 ANDROID_ROOT=$HOME/kodi-android-tools
-EXTRA_OPTIONS=""
+CONFIGURE_EXTRA_OPTIONS=""
+CMAKE_EXTRA_OPTIONS=""
 
 if [[ $# -eq 0 ]]; then
     echo "$0: usage: build-ia.sh [--android] --arch <arch> --kodiversion <version>"
@@ -87,19 +88,19 @@ else
 fi
 
 case $ARCH in
-    x86_64|aarch64|armv7)
+    x86_64|x86|aarch64|armv7)
         ;;
     *)
-        echo "arch not valid, must be one of [x86_64,aarch64,armv7]"
+        echo "arch not valid, must be one of [x86_64,aarch64,armv7,x86] (x86 windows only)"
         exit 3
         ;;
 esac
 
 case $PLATFORM in
-    android|darwin|linux)
+    android|darwin|linux|windows)
         ;;
     *)
-        echo "platform not valid, must be one of [android,darwin,linux]"
+        echo "platform not valid, must be one of [android,darwin,linux,windows]"
         exit 3
         ;;
 esac
@@ -152,7 +153,7 @@ if [[ $PLATFORM = android ]]; then
     cd $ANDROID_ROOT/android-ndk-$NDK_VER/build/tools
     ./make-standalone-toolchain.sh --verbose --force --install-dir=$ANDROID_ROOT/toolchain --platform=android-21 --toolchain=${ARCHS[$PLATFORM-$ARCH]}
     TOOLCHAIN=$ANDROID_ROOT/toolchain
-    EXTRA_OPTIONS="--with-ndk-api=21 --with-sdk-path=$ANDROID_ROOT/android-sdk --with-ndk-path=$ANDROID_ROOT/android-ndk-$NDK_VER  --with-toolchain=$TOOLCHAIN"
+    CONFIGURE_EXTRA_OPTIONS="--with-ndk-api=21 --with-sdk-path=$ANDROID_ROOT/android-sdk --with-ndk-path=$ANDROID_ROOT/android-ndk-$NDK_VER  --with-toolchain=$TOOLCHAIN"
 fi
 
 ### CONFIRE KODI BUILD TOOLS ###
@@ -170,15 +171,38 @@ else
 fi
 
 if [[ $PLATFORM = darwin ]]; then
-    EXTRA_OPTIONS="--with-sdk=10.15"
+    CONFIGURE_EXTRA_OPTIONS="--with-sdk=10.15"
     if [[ $KODI_VERSION = leia ]]; then
         gsed -i '/10\.14);;/a\          10\.15);;' $KODI_GIT/tools/depends/configure.ac
     fi
 fi
 
-cd $KODI_GIT/tools/depends
-./bootstrap
-./configure --host=${ARCHS[$PLATFORM-$ARCH]} --disable-debug --prefix=$HOME/xbmc-depends $EXTRA_OPTIONS
+if [[ $PLATFORM != windows ]]; then
+    cd $KODI_GIT/tools/depends
+    ./ bootstrap
+    ./configure --host=${ARCHS[$PLATFORM-$ARCH]} --disable-debug --prefix=$HOME/xbmc-depends $CONFIGURE_EXTRA_OPTIONS
+else
+    case $ARCH in
+        x86_64)
+            HOST="x64"
+            GENERATOR="Visual Studio 15 Win64"
+            ;;
+        x86)
+            HOST="x86"
+            GENERATOR="Visual Studio 15"
+            ;;
+        *)
+            echo "arch not valid for windows, must be one of [x86_64,x86]"
+            exit 3
+            ;;
+    esac
+    CMAKE_EXTRA_OPTIONS="-G $GENERATOR -T host=$HOST"
+    cd '/c/Program Files (x86)/Microsoft Visual Studio/2017'
+    tree
+    (cd '/c/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Auxiliary/Build' &&
+    cmd //c "VcVarsAll.bat amd64 && bash -c 'printenv PATH'")
+    printenv PATH
+fi
 
 ### ADD-ON SOURCE ###
 cd $IA_HOME
@@ -218,7 +242,10 @@ cd $KODI_GIT/cmake/addons/$ADDON_ID
 ls -a $(dirname "$IA_HOME")
 ls -a $IA_HOME
 
-cmake -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON -DCMAKE_TOOLCHAIN_FILE=$KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake -DADDONS_TO_BUILD=$ADDON_ID -DADDON_SRC_PREFIX="$(dirname "$IA_HOME")" -DADDONS_DEFINITION_DIR=$KODI_GIT/tools/depends/target/binary-addons/addons2 -DPACKAGE_ZIP=1 $KODI_GIT/cmake/addons
+cmake $CMAKE_EXTRA_OPTIONS -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON -DCMAKE_TOOLCHAIN_FILE=$KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake -DADDONS_TO_BUILD=$ADDON_ID -DADDON_SRC_PREFIX="$(dirname "$IA_HOME")" -DADDONS_DEFINITION_DIR=$KODI_GIT/tools/depends/target/binary-addons/addons2 -DPACKAGE_ZIP=1 $KODI_GIT/cmake/addons
+
+    
+fi
 make package-$ADDON_ID
 
 ### COPY ZIP ###

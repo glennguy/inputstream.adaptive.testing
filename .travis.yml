@@ -15,6 +15,14 @@ jobs:
         create:
           name: linux-aarch64-leia
           paths: $HOME/zips
+    - env: KODI_VERSION="matrix"
+      os: windows
+      install: skip
+        #- choco install visualstudio2017buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+      workspaces:
+        create:
+          name: windows-x86_64-matrix
+          paths: $HOME/zips
     - env: PLATFORM="linux" ARCH="aarch64" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
@@ -125,6 +133,8 @@ jobs:
           name: darwin-x86_64-matrix
           paths: $HOME/zips
 
+    
+
     - stage: deploy-main-android
       language: python
       workspaces:
@@ -156,7 +166,6 @@ jobs:
       addons:
         homebrew:
           packages:
-          - aria2
           - gnu-getopt
           - bash
           - coreutils
