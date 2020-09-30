@@ -200,7 +200,7 @@ else
     CMAKE_EXTRA_OPTIONS="-G $GENERATOR -T host=$HOST"
     cd '/c/Program Files (x86)/Microsoft Visual Studio/2017'
     tree.com //a
-    (cd '/c/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Auxiliary/Build' &&
+    (cd '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Auxiliary/Build' &&
     cmd //c "VcVarsAll.bat amd64 && bash -c 'printenv PATH'")
     printenv PATH
 fi
