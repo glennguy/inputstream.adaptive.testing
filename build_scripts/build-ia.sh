@@ -5,7 +5,8 @@ ADDON_ID="inputstream.adaptive.testing"
 KODI_GIT="$HOME/kodi"
 ANDROID_ROOT=$HOME/kodi-android-tools
 CONFIGURE_EXTRA_OPTIONS=""
-CMAKE_EXTRA_OPTIONS=""
+CMAKE_GENERATOR=""
+CMAKE_TOOLSET=""
 
 if [[ $# -eq 0 ]]; then
     echo "$0: usage: build-ia.sh [--android] --arch <arch> --kodiversion <version>"
@@ -181,22 +182,23 @@ if [[ $PLATFORM != windows ]]; then
     cd $KODI_GIT/tools/depends
     ./bootstrap
     ./configure --host=${ARCHS[$PLATFORM-$ARCH]} --disable-debug --prefix=$HOME/xbmc-depends $CONFIGURE_EXTRA_OPTIONS
+    CMAKE_GENERATOR="Unix Makefiles"
 else
     case $ARCH in
         x86_64)
             HOST="x64"
-            GENERATOR="Visual Studio 15 Win64"
+            CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
             ;;
         x86)
             HOST="x86"
-            GENERATOR="Visual Studio 15"
+            CMAKE_GENERATOR="Visual Studio 15 2017"
             ;;
         *)
             echo "arch not valid for windows, must be one of [x86_64,x86]"
             exit 3
             ;;
     esac
-    CMAKE_EXTRA_OPTIONS="-G $GENERATOR -T host=$HOST"
+    CMAKE_TOOLSET="-T host=$HOST"
     echo "exited?"
 fi
 
@@ -243,9 +245,10 @@ else
     mkdir -p $IA_HOME/build && cd "$_"
 fi
 echo "before cmake"
-cmake $CMAKE_EXTRA_OPTIONS -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON $TOOLCHAIN_OPTION -DADDONS_TO_BUILD=$ADDON_ID -DADDON_SRC_PREFIX="$(dirname "$IA_HOME")" -DADDONS_DEFINITION_DIR=$KODI_GIT/tools/depends/target/binary-addons/addons2 -DPACKAGE_ZIP=1 $KODI_GIT/cmake/addons
-echo "before package"
-make package-$ADDON_ID
-
+cmake -G "$CMAKE_GENERATOR" $CMAKE_TOOLSET -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON $TOOLCHAIN_OPTION -DADDONS_TO_BUILD=$ADDON_ID -DADDON_SRC_PREFIX="$(dirname "$IA_HOME")" -DADDONS_DEFINITION_DIR=$KODI_GIT/tools/depends/target/binary-addons/addons2 -DPACKAGE_ZIP=1 $KODI_GIT/cmake/addons
+if [[ $PLATFORM != windows ]]; then
+    make package-$ADDON_ID
+else
+    cmake --build . --config Release --target package-$ADDON_ID
 ### COPY ZIP ###
 mv $KODI_GIT/cmake/addons/$ADDON_ID/$ADDON_ID-prefix/src/$ADDON_ID-build/addon-$ADDON_ID*.zip $HOME/$ZIP_NAME && cd $HOME && ls $ZIP_NAME
