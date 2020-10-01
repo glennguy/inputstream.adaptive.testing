@@ -169,7 +169,7 @@ else
         git checkout $KODI_BRANCH
     fi
 fi
-
+echo "asdasd223232"
 if [[ $PLATFORM = darwin ]]; then
     CONFIGURE_EXTRA_OPTIONS="--with-sdk=10.15"
     if [[ $KODI_VERSION = leia ]]; then
