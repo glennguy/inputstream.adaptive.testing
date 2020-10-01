@@ -248,8 +248,8 @@ echo "before cmake"
 cmake -G "$CMAKE_GENERATOR" $CMAKE_TOOLSET -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON $TOOLCHAIN_OPTION -DADDONS_TO_BUILD=$ADDON_ID -DADDON_SRC_PREFIX="$(dirname "$IA_HOME")" -DADDONS_DEFINITION_DIR=$KODI_GIT/tools/depends/target/binary-addons/addons2 -DPACKAGE_ZIP=1 $KODI_GIT/cmake/addons
 if [[ $PLATFORM != windows ]]; then
     make package-$ADDON_ID
+    mv $KODI_GIT/cmake/addons/$ADDON_ID/$ADDON_ID-prefix/src/$ADDON_ID-build/addon-$ADDON_ID*.zip $HOME/$ZIP_NAME && cd $HOME && ls $ZIP_NAME
 else
     cmake --build . --config Release --target package-$ADDON_ID
+    mv $LOCALAPPDATA/Temp/addon-$ADDON_ID*.zip $HOME/$ZIP_NAME && cd $HOME && ls $ZIP_NAME
 fi
-### COPY ZIP ###
-mv $KODI_GIT/cmake/addons/$ADDON_ID/$ADDON_ID-prefix/src/$ADDON_ID-build/addon-$ADDON_ID*.zip $HOME/$ZIP_NAME && cd $HOME && ls $ZIP_NAME
