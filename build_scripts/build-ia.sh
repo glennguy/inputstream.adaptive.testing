@@ -203,8 +203,6 @@ else
     printenv PATH
 fi
 
-echo "addon source"
-
 ### ADD-ON SOURCE ###
 cd $IA_HOME
 if [[ $KODI_VERSION == "leia" ]]; then
@@ -237,11 +235,17 @@ if [[ $PLATFORM != windows ]]; then
     sed "s|@CMAKE_FIND_ROOT_PATH@|$KODI_GIT/cmake/addons/$ADDON_ID/build/depends|g" $KODI_GIT/tools/depends/target/Toolchain_binaddons.cmake > $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake
 fi
 
+echo "config/build"
+
 mkdir -p $KODI_GIT/tools/depends/target/binary-addons/addons2/$ADDON_ID && cd "$_"
+echo "done mkdir"
 echo "all" > platforms.txt
 echo "$ADDON_ID https://github.com/johnny5-is-alive/$ADDON_ID $KODI_BRANCH" > $ADDON_ID.txt
+echo "done echoing"
 
 cd $KODI_GIT/cmake/addons/$ADDON_ID
+
+echo "done chdir"
 
 ls -a $(dirname "$IA_HOME")
 ls -a $IA_HOME
