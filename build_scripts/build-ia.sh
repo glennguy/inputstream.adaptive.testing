@@ -232,7 +232,9 @@ fi
 ### CONFIGURE & BUILD ###
 echo "Configure/build"
 mkdir -p $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share
+echo "done mkdir"
 cp -f $KODI_GIT/tools/depends/target/config-binaddons.site $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/config.site
+echo "done copy"
 sed "s|@CMAKE_FIND_ROOT_PATH@|$KODI_GIT/cmake/addons/$ADDON_ID/build/depends|g" $KODI_GIT/tools/depends/target/Toolchain_binaddons.cmake > $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake
 
 echo "done sed"
