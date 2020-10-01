@@ -197,11 +197,7 @@ else
             ;;
     esac
     CMAKE_EXTRA_OPTIONS="-G $GENERATOR -T host=$HOST"
-    #export PATH="$(cd '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Auxiliary/Build' && cmd /c "VcVarsAll.bat amd64 && bash -c 'printenv PATH'")"
     echo "exited?"
-    #cd '/c/Program Files/Git'
-    #ls -a
-    printenv PATH
 fi
 
 ### ADD-ON SOURCE ###
