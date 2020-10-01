@@ -235,8 +235,9 @@ echo "all" > platforms.txt
 echo "$ADDON_ID https://github.com/johnny5-is-alive/$ADDON_ID $KODI_BRANCH" > $ADDON_ID.txt
 
 
-
+TOOLCHAIN_OPTION = ""
 if [[ $PLATFORM != windows ]]; then
+    TOOLCHAIN_OPTION="-DCMAKE_TOOLCHAIN_FILE=$KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake"
     mkdir -p $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share
     cp -f $KODI_GIT/tools/depends/target/config-binaddons.site $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/config.site
     sed "s|@CMAKE_FIND_ROOT_PATH@|$KODI_GIT/cmake/addons/$ADDON_ID/build/depends|g" $KODI_GIT/tools/depends/target/Toolchain_binaddons.cmake > $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake
@@ -246,7 +247,7 @@ else
     mkdir -p $IA_HOME/build && cd "$_"
 fi
 echo "before cmake"
-cmake $CMAKE_EXTRA_OPTIONS -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON -DCMAKE_TOOLCHAIN_FILE=$KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake -DADDONS_TO_BUILD=$ADDON_ID -DADDON_SRC_PREFIX="$(dirname "$IA_HOME")" -DADDONS_DEFINITION_DIR=$KODI_GIT/tools/depends/target/binary-addons/addons2 -DPACKAGE_ZIP=1 $KODI_GIT/cmake/addons
+cmake $CMAKE_EXTRA_OPTIONS -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON $TOOLCHAIN_OPTION -DADDONS_TO_BUILD=$ADDON_ID -DADDON_SRC_PREFIX="$(dirname "$IA_HOME")" -DADDONS_DEFINITION_DIR=$KODI_GIT/tools/depends/target/binary-addons/addons2 -DPACKAGE_ZIP=1 $KODI_GIT/cmake/addons
 echo "before package"
 make package-$ADDON_ID
 
