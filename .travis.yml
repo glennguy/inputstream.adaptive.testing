@@ -21,9 +21,6 @@ jobs:
         #- choco install visualstudio2017buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
       before_script:
         - export VS150COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/Tools"
-      after_script:
-        - ls $HOME/AppData/Local/Temp/
-        - mv $LOCALAPPDATA/Temp/addon-$ADDON_ID*.zip $HOME/$ZIP_NAME && cd $HOME && ls $ZIP_NAME
       workspaces:
         create:
           name: windows-x86_64-matrix
