@@ -230,20 +230,16 @@ if [[ $CLEAN_BUILD = yes ]]; then
     cd $KODI_GIT/cmake/addons && (git clean -xfd || rm -rf CMakeCache.txt CMakeFiles cmake_install.cmake build/*)
 fi
 ### CONFIGURE & BUILD ###
-echo "Configure/build"
-mkdir -p $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share
-echo "done mkdir"
-cp -f $KODI_GIT/tools/depends/target/config-binaddons.site $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/config.site
-echo "done copy"
-sed "s|@CMAKE_FIND_ROOT_PATH@|$KODI_GIT/cmake/addons/$ADDON_ID/build/depends|g" $KODI_GIT/tools/depends/target/Toolchain_binaddons.cmake > $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake
 
-echo "done sed"
+if [[ $PLATFORM != windows ]]; then
+    mkdir -p $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share
+    cp -f $KODI_GIT/tools/depends/target/config-binaddons.site $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/config.site
+    sed "s|@CMAKE_FIND_ROOT_PATH@|$KODI_GIT/cmake/addons/$ADDON_ID/build/depends|g" $KODI_GIT/tools/depends/target/Toolchain_binaddons.cmake > $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake
+fi
 
 mkdir -p $KODI_GIT/tools/depends/target/binary-addons/addons2/$ADDON_ID && cd "$_"
 echo "all" > platforms.txt
 echo "$ADDON_ID https://github.com/johnny5-is-alive/$ADDON_ID $KODI_BRANCH" > $ADDON_ID.txt
-
-echo "made addons2"
 
 cd $KODI_GIT/cmake/addons/$ADDON_ID
 
