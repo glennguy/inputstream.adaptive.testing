@@ -235,7 +235,7 @@ echo "all" > platforms.txt
 echo "$ADDON_ID https://github.com/johnny5-is-alive/$ADDON_ID $KODI_BRANCH" > $ADDON_ID.txt
 
 
-TOOLCHAIN_OPTION = ""
+TOOLCHAIN_OPTION=""
 if [[ $PLATFORM != windows ]]; then
     TOOLCHAIN_OPTION="-DCMAKE_TOOLCHAIN_FILE=$KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share/Toolchain_binaddons.cmake"
     mkdir -p $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share
