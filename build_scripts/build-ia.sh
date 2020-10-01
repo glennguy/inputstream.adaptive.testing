@@ -198,10 +198,12 @@ else
     esac
     CMAKE_EXTRA_OPTIONS="-G $GENERATOR -T host=$HOST"
     cd '/c/Program Files (x86)/Microsoft Visual Studio/2017'
-    tree.com //a
+    
     export PATH="$(cd '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Auxiliary/Build' && cmd //c "VcVarsAll.bat amd64 && bash -c 'printenv PATH'")"
     printenv PATH
 fi
+
+echo "addon source"
 
 ### ADD-ON SOURCE ###
 cd $IA_HOME
