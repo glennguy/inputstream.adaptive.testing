@@ -19,6 +19,8 @@ jobs:
       os: windows
       install: skip
         #- choco install visualstudio2017buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+      before_script:
+        - export VS150COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/Tools"
       workspaces:
         create:
           name: windows-x86_64-matrix
