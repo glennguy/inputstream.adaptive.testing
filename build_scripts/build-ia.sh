@@ -199,6 +199,8 @@ else
     CMAKE_EXTRA_OPTIONS="-G $GENERATOR -T host=$HOST"
     export PATH="$(cd '/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Auxiliary/Build' && cmd //c "VcVarsAll.bat amd64 && bash -c 'printenv PATH'" && exit)"
     echo "exited?"
+    cd '/c/Program Files/Git'
+    ls -a
     printenv PATH
 fi
 
@@ -231,6 +233,8 @@ fi
 mkdir -p $KODI_GIT/tools/depends/target/binary-addons/addons2/$ADDON_ID && cd "$_"
 echo "all" > platforms.txt
 echo "$ADDON_ID https://github.com/johnny5-is-alive/$ADDON_ID $KODI_BRANCH" > $ADDON_ID.txt
+
+
 
 if [[ $PLATFORM != windows ]]; then
     mkdir -p $KODI_GIT/cmake/addons/$ADDON_ID/build/depends/share
