@@ -137,7 +137,7 @@ jobs:
 
     
 
-    - stage: deploy-main-android
+    - stage: deploy-main-android-windows
       language: python
       workspaces:
         use:
@@ -145,6 +145,7 @@ jobs:
           - android-aarch64-matrix
           - android-armv7-leia
           - android-armv7-matrix
+          - windows-x86_64-matrix
       install:
         - sudo apt-get update && sudo apt-get -y update
         - sudo apt install -y --no-install-recommends build-essential git unzip
