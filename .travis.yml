@@ -154,7 +154,7 @@ jobs:
       script:
         - ls $HOME -a
         - tree $HOME
-        - mv $HOME/c/Users/travis/zips/*.zip $HOME/zips
+        - mv $TRAVIS_BUILD_DIR/C:/Users/travis/zips/*.zip $HOME/zips
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r main
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r main
     
