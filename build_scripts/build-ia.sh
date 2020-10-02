@@ -175,6 +175,9 @@ if [[ $PLATFORM = darwin ]]; then
     CONFIGURE_EXTRA_OPTIONS="--with-sdk=10.15 --with-platform=macos"
     if [[ $KODI_VERSION = leia ]]; then
         gsed -i '/10\.14);;/a\          10\.15);;' $KODI_GIT/tools/depends/configure.ac
+        CONFIGURE_EXTRA_OPTIONS="--with-sdk=10.15"
+    else
+        CONFIGURE_EXTRA_OPTIONS="--with-sdk=10.15 --with-platform=macos"
     fi
 fi
 
