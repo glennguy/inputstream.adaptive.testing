@@ -15,16 +15,6 @@ jobs:
         create:
           name: linux-aarch64-leia
           paths: $HOME/zips
-    - env: PLATFORM="windows" ARCH="x86_64" KODI_VERSION="matrix"
-      os: windows
-      install: skip
-        #- choco install visualstudio2017buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
-      before_script:
-        - export VS150COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/Tools"
-      workspaces:
-        create:
-          name: windows-x86_64-matrix
-          paths: $HOME/zips
     - env: PLATFORM="linux" ARCH="aarch64" KODI_VERSION="matrix"
       dist: bionic
       workspaces:
@@ -134,7 +124,34 @@ jobs:
         create:
           name: darwin-x86_64-matrix
           paths: $HOME/zips
-
+    
+    - env: PLATFORM="windows" ARCH="x86" KODI_VERSION="leia"
+      os: windows
+      install: skip
+      before_script:
+        - export VS150COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/Tools"
+      workspaces:
+        create:
+          name: windows-x86-leia
+          paths: $HOME/zips
+    - env: PLATFORM="windows" ARCH="x86_64" KODI_VERSION="leia"
+      os: windows
+      install: skip
+      before_script:
+        - export VS150COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/Tools"
+      workspaces:
+        create:
+          name: windows-x86_64-leia
+          paths: $HOME/zips
+    - env: PLATFORM="windows" ARCH="x86_64" KODI_VERSION="matrix"
+      os: windows
+      install: skip
+      before_script:
+        - export VS150COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/Tools"
+      workspaces:
+        create:
+          name: windows-x86_64-matrix
+          paths: $HOME/zips
     
 
     - stage: deploy-main-android-windows
@@ -145,6 +162,8 @@ jobs:
           - android-aarch64-matrix
           - android-armv7-leia
           - android-armv7-matrix
+          - windows-x86-leia
+          - windows-x86_64-leia
           - windows-x86_64-matrix
       install:
         - sudo apt-get update && sudo apt-get -y update
@@ -235,7 +254,7 @@ jobs:
         - cd $HOME/.deploy
         - git checkout master
         - git merge travis-build-$TRAVIS_BUILD_NUMBER
-        - git branch -d travis-build-$TRAVIS_BUILD_NUMBER
+        - git push origin --delete travis-build-$TRAVIS_BUILD_NUMBER
         - git push --set-upstream origin master
 
 install:
