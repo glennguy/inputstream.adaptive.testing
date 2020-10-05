@@ -232,6 +232,11 @@ jobs:
       script:
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r linux-x86_64
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r linux-x86_64
+        - cd $HOME/.deploy
+        - git checkout Matrix
+        - git merge travis-build-$TRAVIS_BUILD_NUMBER
+        - git branch -d travis-build-$TRAVIS_BUILD_NUMBER
+        - git push --set-upstream origin Matrix
 
 install:
   - sudo apt-get update && sudo apt-get -y update
