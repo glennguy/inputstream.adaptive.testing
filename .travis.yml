@@ -74,9 +74,7 @@ jobs:
       os: osx
       osx_image: xcode11.3
       before_cache:
-        - ls -a /usr/local/Homebrew
         - brew cleanup
-        - ls -a /usr/local/Homebrew
       cache:
         directories:
           - $HOME/Library/Caches/Homebrew
@@ -101,9 +99,7 @@ jobs:
       os: osx
       osx_image: xcode11.3
       before_cache:
-        - ls -a /usr/local/Homebrew
         - brew cleanup
-        - ls -a /usr/local/Homebrew
       cache:
         directories:
           - $HOME/Library/Caches/Homebrew
@@ -167,13 +163,9 @@ jobs:
           - windows-x86_64-leia
           - windows-x86_64-matrix
       install:
-        - sudo apt-get update && sudo apt-get -y update
-        - sudo apt install -y --no-install-recommends tree build-essential git unzip
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
-        - ls $HOME -a
-        - tree $HOME
         - mv $TRAVIS_BUILD_DIR/C:/Users/travis/zips/*.zip $HOME/zips
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k leia -r main
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r main
@@ -183,9 +175,7 @@ jobs:
       os: osx
       osx_image: xcode11.3
       before_cache:
-        - ls -a /usr/local/Homebrew
         - brew cleanup
-        - ls -a /usr/local/Homebrew
       cache:
         directories:
           - $HOME/Library/Caches/Homebrew
