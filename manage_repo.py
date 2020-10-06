@@ -426,15 +426,28 @@ def create_repository(addon_locations, target_folder, info_path,
     for addon_metadata in metadata:
         # Remove existing addon from doc
         for addon in root:
-            remove = False
             if addon.attrib.get('id') == addon_metadata.id:
                 if addon_metadata.platform is None:
                     root.remove(addon)
                 else:
                     platform = addon.find(
                         './extension[@point="xbmc.addon.metadata"]/platform')
-                    if platform.text == addon_metadata.platform.text:
-                        root.remove(addon)         
+                    if platform.text != addon_metadata.platform.text:
+                        continue
+                    remove = True
+                    for dep in addon.find('requires').findall('import'):
+                        req = dep.attrib.get('addon')
+                        if not req or not req.startswith('kodi.binary'):
+                            continue
+                        metadata_dep = addon_metadata.root.find(
+                            './requires/import[@addon="{0}"]'.format(req))
+                        if metadata_dep is None:
+                            continue
+                        if metadata_dep.attrib.get(
+                                'minversion') != dep.attrib.get('minversion'):
+                            remove = False
+                    if remove:
+                        root.remove(addon)
         tree = root.append(addon_metadata.root)
 
     tree = xml.etree.ElementTree.ElementTree(root)
