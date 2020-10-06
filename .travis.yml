@@ -155,8 +155,7 @@ jobs:
     
 
     - stage: deploy-main-android-windows
-      before_install:
-        - if [ -z "$TRAVIS_TAG" ]; then travis_terminate 0; fi  # only deploy on tags
+      if: tag IS present
       language: python
       workspaces:
         use:
@@ -180,6 +179,7 @@ jobs:
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r main
     
     - stage: deploy-main-macos
+      if: tag IS present
       os: osx
       osx_image: xcode11.3
       before_cache:
@@ -210,6 +210,7 @@ jobs:
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r main
     
     - stage: deploy-linux-aarch64
+      if: tag IS present
       language: python
       workspaces:
         use:
@@ -225,6 +226,7 @@ jobs:
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r linux-aarch64
     
     - stage: deploy-linux-armv7
+      if: tag IS present
       language: python
       workspaces:
         use:
@@ -240,6 +242,7 @@ jobs:
         - bash -x $TRAVIS_BUILD_DIR/build_scripts/deploy.sh -k matrix -r linux-armv7
     
     - stage: deploy-linux-x86_64
+      if: tag IS present
       language: python
       workspaces:
         use:
