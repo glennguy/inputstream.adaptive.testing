@@ -218,7 +218,7 @@ if [[ $KODI_VERSION == "leia" ]]; then
         touch $IA_HOME/patchapplied
     fi
 else
-    git checkout Matrix
+    git checkout Matrix || git branch Matrix # if tag is checked out
     if [[ -f $IA_HOME/patchapplied ]]; then
         git apply -R Leia.patch
         rm $IA_HOME/patchapplied
