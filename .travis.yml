@@ -155,6 +155,8 @@ jobs:
     
 
     - stage: deploy-main-android-windows
+      before_install:
+        - if [ -z "$TRAVIS_TAG" ]; then travis_terminate 0; fi  # only deploy on tags
       language: python
       workspaces:
         use:

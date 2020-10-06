@@ -20,6 +20,10 @@ for f in $(find $HOME/zips -name '*.zip'); do
     mkdir -p $TRAVIS_BUILD_DIR/.build/$REPO/$KODI_VERSION/$(basename "$f" .zip)
     unzip $f -d $TRAVIS_BUILD_DIR/.build/$REPO/$KODI_VERSION/$(basename "$f" .zip)
     python3 $TRAVIS_BUILD_DIR/manage_repo.py $TRAVIS_BUILD_DIR -b $TRAVIS_BUILD_DIR/.build/$REPO/$KODI_VERSION/$(basename "$f" .zip)/${APP_ID}
+    ret=$?
+    if [ $ret -ne 0 ]; then
+      exit $ret
+    fi
   fi
 done
 
@@ -29,5 +33,5 @@ git config --global user.name "Travis CI"
 git config credential.helper "store --file=.git/credentials"
 echo "https://${GH_TOKEN}:@github.com" > .git/credentials
 git add .
-git commit --allow-empty -m "$TRAVIS_COMMIT_MESSAGE"
+git commit --allow-empty -m "Update $(basename `git -C $TRAVIS_BUILD_DIR rev-parse --show-toplevel`) to $TRAVIS_TAG"
 git push --set-upstream origin travis-build-$TRAVIS_BUILD_NUMBER
