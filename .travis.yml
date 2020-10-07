@@ -207,8 +207,6 @@ jobs:
           - linux-aarch64-leia
           - linux-aarch64-matrix
       install:
-        - sudo apt-get update && sudo apt-get -y update
-        - sudo apt install -y --no-install-recommends build-essential git unzip
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
@@ -223,8 +221,6 @@ jobs:
           - linux-armv7-leia
           - linux-armv7-matrix
       install:
-        - sudo apt-get update && sudo apt-get -y update
-        - sudo apt install -y --no-install-recommends build-essential git unzip
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:
@@ -239,8 +235,6 @@ jobs:
           - linux-x86_64-leia
           - linux-x86_64-matrix
       install:
-        - sudo apt-get update && sudo apt-get -y update
-        - sudo apt install -y --no-install-recommends build-essential git unzip
         - pip3 install gitpython
         - git clone https://github.com/glennguy/iat-repo.git $HOME/.deploy
       script:

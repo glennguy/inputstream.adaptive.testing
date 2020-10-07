@@ -156,7 +156,7 @@ if [[ $PLATFORM = android ]]; then
     TOOLCHAIN=$ANDROID_ROOT/toolchain
     CONFIGURE_EXTRA_OPTIONS="--with-ndk-api=21 --with-sdk-path=$ANDROID_ROOT/android-sdk --with-ndk-path=$ANDROID_ROOT/android-ndk-$NDK_VER  --with-toolchain=$TOOLCHAIN"
 fi
-echo "asdasd"
+
 ### CONFIRE KODI BUILD TOOLS ###
 if  [[ ! -d $KODI_GIT ]]; then
     git clone https://github.com/xbmc/xbmc --branch $KODI_BRANCH --depth 1 $KODI_GIT
@@ -170,7 +170,7 @@ else
         git checkout $KODI_BRANCH
     fi
 fi
-echo "asdasd223232"
+
 if [[ $PLATFORM = darwin ]]; then
     CONFIGURE_EXTRA_OPTIONS="--with-sdk=10.15 --with-platform=macos"
     if [[ $KODI_VERSION = leia ]]; then
@@ -247,7 +247,7 @@ if [[ $PLATFORM != windows ]]; then
 else
     mkdir -p $IA_HOME/build && cd "$_"
 fi
-echo "before cmake"
+
 cmake -G "$CMAKE_GENERATOR" $CMAKE_TOOLSET -DCMAKE_BUILD_TYPE=Release -DOVERRIDE_PATHS=ON $TOOLCHAIN_OPTION -DADDONS_TO_BUILD=$ADDON_ID -DADDON_SRC_PREFIX="$(dirname "$IA_HOME")" -DADDONS_DEFINITION_DIR=$KODI_GIT/tools/depends/target/binary-addons/addons2 -DPACKAGE_ZIP=1 $KODI_GIT/cmake/addons
 if [[ $PLATFORM != windows ]]; then
     make package-$ADDON_ID
